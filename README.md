@@ -47,6 +47,6 @@ if (best_dist < ratio_thresh * second_best_dist) { ... }
 
 ## 📸 Screenshots
 
-| Feature Extraction (Harris/Shi-Tomasi) | Feature Matching (SIFT + SSD/NCC) |
+| Feature Extraction (Harris/Shi-Tomasi) | Feature Detection (SIFT) | Feature Matching (SSD VS. NCC) |
 | :---: | :---: |
-| ![Harris Result](screenshots/harris_result.jpg) | ![Matching Result](screenshots/matching_result.jpg) |
+| ![Harris Result](screenshots/harris_result.jpg)+(screenshoots/shi_tomasi.jpg) | ![SIFT Result](screenshots/sift.jpg) | ![Feature Matching Result](screenshots/feature_matching_SSD.png)+(screenshoots/feature_matching_NCC.png)|
