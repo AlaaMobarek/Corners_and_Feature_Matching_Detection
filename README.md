@@ -43,7 +43,7 @@ This project translates complex CV mathematics into optimized C++ code:
 float best_dist = 1.0f - maxNCC;
 float second_best_dist = 1.0f - secondMaxNCC;
 if (best_dist < ratio_thresh * second_best_dist) { ... }
-
+```
 
 ## 📸 Screenshots
 
