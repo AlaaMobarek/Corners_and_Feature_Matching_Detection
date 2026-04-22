@@ -1,6 +1,6 @@
 # Corners_and_Feature_Matching_Detection
 
-### 🔍 Images Feature Extractor & Matcher
+## 🔍 Images Feature Extractor & Matcher
 
 ![C++](https://img.shields.io/badge/C++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
 ![Qt](https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white)
@@ -34,11 +34,16 @@ Custom matching functions designed to find the best correspondence between two s
 * **1-to-1 Match Validation:** A secondary filtering layer that prevents crossed lines and many-to-one matches by keeping only unique index assignments.
 
 ## 🧠 Mathematical Core (Under the Hood)
-To integrate **Lowe's Ratio Test** natively with **NCC** (which outputs a similarity score from 0 to 1, where 1 is a perfect match), the application mathematically transforms the correlation score into a distance metric:
+This project translates complex CV mathematics into optimized C++ code:
+
+* **SSD Optimization:** Operates directly on squared distances to save CPU cycles (avoiding costly `std::sqrt` calls), squaring the ratio threshold accordingly: `minSSD < (ratio * ratio) * secondMinSSD`.
+* **NCC to Distance Conversion:** To integrate Lowe's Ratio Test natively with NCC (which outputs a similarity score from 0 to 1, where 1 is a perfect match), the application mathematically transforms the correlation score into a distance metric:
+
 ```cpp
 float best_dist = 1.0f - maxNCC;
 float second_best_dist = 1.0f - secondMaxNCC;
 if (best_dist < ratio_thresh * second_best_dist) { ... }
+
 
 ## 📸 Screenshots
 
