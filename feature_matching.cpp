@@ -8,26 +8,25 @@
 std::vector<cv::DMatch> matchFeaturesSSD(const cv::Mat& desc1, const cv::Mat& desc2, float ratio_thresh) {
     std::vector<cv::DMatch> matches;
 
-    // بنلف على كل نقطة (Descriptor) في الصورة الأولى
+   
     for (int i = 0; i < desc1.rows; i++) {
         float minSSD = std::numeric_limits<float>::max();
         float secondMinSSD = std::numeric_limits<float>::max();
         int bestMatchIdx = -1;
 
-        const float* d1 = desc1.ptr<float>(i); // الـ Vector الخاص بالنقطة i
+        const float* d1 = desc1.ptr<float>(i); 
 
-        // بنقارنها بكل النقط (Descriptors) في الصورة التانية
+
         for (int j = 0; j < desc2.rows; j++) {
             const float* d2 = desc2.ptr<float>(j);
             float ssd = 0.0f;
 
-            // حساب الـ SSD بين الـ 128 عنصر
+
             for (int k = 0; k < desc1.cols; k++) {
                 float diff = d1[k] - d2[k];
                 ssd += diff * diff;
             }
 
-            // حفظ أفضل وأقرب نقطتين (عشان الـ Ratio Test بتاع SIFT)
             if (ssd < minSSD) {
                 secondMinSSD = minSSD;
                 minSSD = ssd;
@@ -37,9 +36,7 @@ std::vector<cv::DMatch> matchFeaturesSSD(const cv::Mat& desc1, const cv::Mat& de
             }
         }
 
-        // تطبيق Lowe's Ratio Test لفلترة الخطوط العشوائية (Noise)
         if (minSSD < (ratio_thresh * ratio_thresh) * secondMinSSD) {
-            // بنسجل إن النقطة i في الصورة الأولى اتوصلت بالنقطة bestMatchIdx في التانية
             matches.push_back(cv::DMatch(i, bestMatchIdx, minSSD));
         }
     }
@@ -55,7 +52,7 @@ std::vector<cv::DMatch> matchFeaturesNCC(const cv::Mat& desc1, const cv::Mat& de
 
     for (int i = 0; i < desc1.rows; i++) {
         float maxNCC = -std::numeric_limits<float>::max();
-        float secondMaxNCC = -std::numeric_limits<float>::max(); // ضفنا متغير لتاني أفضل تطابق
+        float secondMaxNCC = -std::numeric_limits<float>::max(); 
         int bestMatchIdx = -1;
 
         const float* d1 = desc1.ptr<float>(i);
@@ -80,7 +77,6 @@ std::vector<cv::DMatch> matchFeaturesNCC(const cv::Mat& desc1, const cv::Mat& de
                 ncc = numerator / denominator;
             }
 
-            // حفظ أفضل وأقرب نقطتين عشان الـ Ratio Test
             if (ncc > maxNCC) {
                 secondMaxNCC = maxNCC;
                 maxNCC = ncc;
@@ -91,9 +87,7 @@ std::vector<cv::DMatch> matchFeaturesNCC(const cv::Mat& desc1, const cv::Mat& de
         }
 
         // ===================================================
-        // تطبيق Lowe's Ratio Test على الـ NCC
-        // المسافة في الـ NCC بنعبر عنها بـ (1 - قيمة الارتباط)
-        // فكل ما الرقم يقرب لصفر يبقى أفضل
+        // ِApply Lowe's Ratio Test to NCC
         // ===================================================
         float best_dist = 1.0f - maxNCC;
         float second_best_dist = 1.0f - secondMaxNCC;
