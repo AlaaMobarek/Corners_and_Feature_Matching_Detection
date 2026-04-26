@@ -48,7 +48,7 @@ if (best_dist < ratio_thresh * second_best_dist) { ... }
 ## 📸 Screenshots
 
 ### 🔹 Feature Extraction and SIFT
-| Feature Extraction (Harris) | Feature Extraction (Shi-Tomasi) | Feature Detection (SIFT) 
+| Feature Extraction (Harris) | Feature Extraction (Shi-Tomasi) | Feature Detection (SIFT)| 
 | :---: | :---: |
 | ![Harris Result](screenshoots/harris_result.jpg)| ![Shi-Tomasi Result](screenshoots/shi_tomasi.jpg) | ![SIFT Result](screenshoots/sift.jpg) |
 
